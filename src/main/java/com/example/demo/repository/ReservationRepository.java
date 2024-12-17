@@ -32,4 +32,8 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
     @EntityGraph(attributePaths = {"user", "item"})
     @Query("SELECT r FROM Reservation r")
     List<Reservation> findAllByUserAndItem();
+
+    default Reservation findByIdOrElseThrow(Long reservationId) {
+        return findById(reservationId).orElseThrow(() -> new IllegalArgumentException("해당 ID에 맞는 데이터가 존재하지 않습니다."));
+    }
 }
