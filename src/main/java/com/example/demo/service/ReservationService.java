@@ -48,7 +48,7 @@ public class ReservationService {
 
         Item item = itemRepository.findById(itemId).orElseThrow(() -> new IllegalArgumentException("해당 ID에 맞는 값이 존재하지 않습니다."));
         User user = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("해당 ID에 맞는 값이 존재하지 않습니다."));
-        Reservation reservation = new Reservation(item, user, ReservationStatus.PENDING.getValue(), startAt, endAt);
+        Reservation reservation = new Reservation(item, user, Status.PENDING.getValue(), startAt, endAt);
         Reservation savedReservation = reservationRepository.save(reservation);
 
         RentalLog rentalLog = new RentalLog(savedReservation, "로그 메세지", "CREATE");
@@ -108,16 +108,16 @@ public class ReservationService {
     public ReservationStatusResponseDto updateReservationStatus(Long reservationId, String status) {
         Reservation reservation = reservationRepository.findByIdOrElseThrow(reservationId);
 
-        if (ReservationStatus.APPROVED.getValue().equals(status)) {
-            if (!ReservationStatus.PENDING.getValue().equals(reservation.getStatus().getValue())) {
+        if (Status.APPROVED.getValue().equals(status)) {
+            if (!Status.PENDING.getValue().equals(reservation.getStatus().getValue())) {
                 throw new IllegalArgumentException("PENDING 상태만 APPROVED로 변경 가능합니다.");
             }
-        } else if (ReservationStatus.CANCELED.getValue().equals(status)) {
-            if (ReservationStatus.EXPIRED.getValue().equals(reservation.getStatus().getValue())) {
+        } else if (Status.CANCELED.getValue().equals(status)) {
+            if (Status.EXPIRED.getValue().equals(reservation.getStatus().getValue())) {
                 throw new IllegalArgumentException("EXPIRED 상태인 예약은 취소할 수 없습니다.");
             }
-        } else if (ReservationStatus.EXPIRED.getValue().equals(status)) {
-            if (!ReservationStatus.PENDING.getValue().equals(reservation.getStatus().getValue())) {
+        } else if (Status.EXPIRED.getValue().equals(status)) {
+            if (!Status.PENDING.getValue().equals(reservation.getStatus().getValue())) {
                 throw new IllegalArgumentException("PENDING 상태만 EXPIRED로 변경 가능합니다.");
             }
         }

@@ -25,12 +25,12 @@ public class Reservation {
     private LocalDateTime endAt;
 
     @Enumerated(value = EnumType.STRING)
-    private ReservationStatus status;
+    private Status status;
 
     public Reservation(Item item, User user, String status, LocalDateTime startAt, LocalDateTime endAt) {
         this.item = item;
         this.user = user;
-        this.status = ReservationStatus.of(status);
+        this.status = Status.of(status);
         this.startAt = startAt;
         this.endAt = endAt;
     }
@@ -38,6 +38,6 @@ public class Reservation {
     public Reservation() {}
 
     public void updateStatus(String status) {
-        this.status = ReservationStatus.of(status);
+        this.status = Status.of(status);
     }
 }

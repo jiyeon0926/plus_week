@@ -3,7 +3,7 @@ package com.example.demo.entity;
 import lombok.Getter;
 
 @Getter
-public enum ReservationStatus {
+public enum Status {
     PENDING("pending"),
     APPROVED("approved"),
     CANCELED("canceled"),
@@ -11,14 +11,14 @@ public enum ReservationStatus {
 
     private final String value;
 
-    ReservationStatus(String value) {
+    Status(String value) {
         this.value = value;
     }
 
-    public static ReservationStatus of(String status) {
-        for (ReservationStatus reservationStatus : values()) {
-            if (reservationStatus.getValue().equals(status)) {
-                return reservationStatus;
+    public static Status of(String status) {
+        for (Status value : values()) {
+            if (value.getValue().equals(status)) {
+                return value;
             }
         }
 
