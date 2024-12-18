@@ -28,9 +28,9 @@ class ItemTest {
         User manager = new User("admin", "user1@naver.com", "유저1", "user*1234");
         User owner = new User("user", "user2@naver.com", "유저2", "user*1234");
 
-        Item item = new Item("연필", "필기구", manager, owner);
-        item.setStatus("PENDING");
-        when(itemRepository.findItemByName("연필")).thenReturn(item);
+        Item mockItem = new Item("연필", "필기구", manager, owner);
+        mockItem.setStatus("PENDING");
+        when(itemRepository.findItemByName("연필")).thenReturn(mockItem);
 
         // when
         Item foundItem = itemService.findItemByName("연필");
