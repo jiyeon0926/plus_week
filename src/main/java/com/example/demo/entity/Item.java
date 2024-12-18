@@ -37,4 +37,9 @@ public class Item {
     }
 
     public Item() {}
+
+    // itemTest 테스트 코드 작성할때 사용
+    public void setStatus(String status) {
+        this.status = status;
+    }
 }

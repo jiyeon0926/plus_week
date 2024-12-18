@@ -25,4 +25,9 @@ public class ItemService {
         Item item = new Item(name, description, owner, manager);
         itemRepository.save(item);
     }
+
+    // itemTest 테스트 코드 작성할때 사용
+    public Item findItemByName(String name) {
+        return itemRepository.findItemByName(name);
+    }
 }
