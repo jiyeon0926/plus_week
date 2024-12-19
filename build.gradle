@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '3.4.0'
     id 'io.spring.dependency-management' version '1.1.6'
+    id 'jacoco'
 }
 
 group = 'com.sparta'
@@ -46,4 +47,37 @@ dependencies {
 
 tasks.named('test') {
     useJUnitPlatform()
+
+    jacoco {}
+    finalizedBy(tasks.jacocoTestReport)
+}
+
+jacocoTestReport {
+    reports {
+        html.required = true // HTML 리포트 생성
+        xml.required = true // XML 리포트 비활성화
+        csv.required = false // CSV 리포트 비활성화
+
+        // 리포트의 저장 경로를 설정
+        html.destination(file("jacoco/jacoco.html"))
+        xml.destination(file("jacoco/jacoco.xml"))
+    }
+
+    finalizedBy(tasks.jacocoTestCoverageVerification)
+}
+
+jacocoTestCoverageVerification {
+
+    violationRules { // 커버리지의 범위와 퍼센테이지를 설정
+        rule {
+            enabled = true
+            element = 'CLASS'
+
+            limit {
+                counter = 'BRANCH'
+                value = 'COVEREDRATIO'
+                minimum = 0.60
+            }
+        }
+    }
 }
